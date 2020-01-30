@@ -12,54 +12,47 @@ package hw1.sebastianjayramsey;
  * @author sebastian.braun
  */
 public class RC4 {
-
     private final byte[] S = new byte[256];
     private final byte[] T = new byte[256];
-    private int keyLength;
+    private final int keylen;
 
-    public void RC4(final byte[] key) {
+    public RC4(final byte[] key) {
         if (key.length < 1 || key.length > 256) {
             throw new IllegalArgumentException(
                     "key must be between 1 and 256 bytes");
         } else {
-            keyLength = key.length;
+            keylen = key.length;
             for (int i = 0; i < 256; i++) {
                 S[i] = (byte) i;
-                T[i] = key[i % keyLength];
+                T[i] = key[i % keylen];
             }
             int j = 0;
-            byte temp;
             for (int i = 0; i < 256; i++) {
                 j = (j + S[i] + T[i]) & 0xFF;
-                temp = S[j];
-                S[j] = S[i];
-                S[i] = temp;
+                byte temp = S[i];
+                S[i] = S[j];
+                S[j] = temp;
             }
-
         }
-
     }
 
-    public byte[] rc4Encryption(final byte[] plaintext) {
+    public byte[] encrypt(final byte[] plaintext) {
         final byte[] ciphertext = new byte[plaintext.length];
         int i = 0, j = 0, k, t;
-        byte temp;
-        for (int count = 0; count < plaintext.length; count++) {
+        for (int counter = 0; counter < plaintext.length; counter++) {
             i = (i + 1) & 0xFF;
             j = (j + S[i]) & 0xFF;
-            temp = S[j];
-            S[j] = S[i];
-            S[i] = temp;
+            byte temp = S[i];
+            S[i] = S[j];
+            S[j] = temp;
             t = (S[i] + S[j]) & 0xFF;
             k = S[t];
-            ciphertext[count] = (byte) (plaintext[count] ^ k);
-
+            ciphertext[counter] = (byte) (plaintext[counter] ^ k);
         }
-
         return ciphertext;
     }
 
-    public byte[] rc4Decryption(byte[] ciphertext) {
-        return rc4Encryption(ciphertext);
+    public byte[] decrypt(final byte[] ciphertext) {
+        return encrypt(ciphertext);
     }
 }
