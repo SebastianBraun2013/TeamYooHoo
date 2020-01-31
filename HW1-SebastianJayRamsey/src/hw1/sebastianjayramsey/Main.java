@@ -11,6 +11,7 @@ import java.util.Base64;
 import java.util.UUID;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+
 /**
  *
  * @author sebastian.braun
@@ -40,20 +41,19 @@ public class Main {
     //Base64 encoding
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        
+
         String plainText = "";
         String userkey = "";
         System.out.println("Which algorithm would you like to use [R}C4 or [T}ea");
-        if(scanner.nextLine().charAt(0) == 'R'){
+        if (scanner.nextLine().charAt(0) == 'R') {
             System.out.println("[E]ncryption or [D]ecryption");
-            if(scanner.nextLine().charAt(0) == 'E'){
+            if (scanner.nextLine().charAt(0) == 'E') {
                 System.out.println("Give message");
                 plainText = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] encrypted = e.encrypt(hexStringToByteArray(plainText));//change this to string2byte[]
+                byte[] encrypted = e.encrypt(stringToByteArray(plainText));//change this to string2byte[]
                 System.out.println(base64(encrypted));
             } else {
                 System.out.println("Give message");
@@ -62,27 +62,26 @@ public class Main {
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
-                System.out.println("" + decrypted.toString());
+                byte[] decrypted = e.decrypt(base64Decode(plainText));
+                System.out.println( new String(decrypted));
             }
-        } else{
+        } else {
             System.out.println("[E]ncryption or [D]ecryption");
-            if(scanner.nextLine().charAt(0) == 'E'){
+            if (scanner.nextLine().charAt(0) == 'E') {
                 System.out.println("Give message");
                 plainText = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
-                RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] encrypted = e.encrypt(hexStringToByteArray(plainText));//change this to string2byte[]
+                TEA e = new TEA(stringToByteArray(plainText), hexStringToByteArray(userkey));
+                byte[] encrypted = e.Tencryption();
                 System.out.println(base64(encrypted));
             } else {
                 System.out.println("Give message");
                 plainText = scanner.nextLine();
-
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
-                RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
+                TEA e = new TEA(base64Decode(plainText), hexStringToByteArray(userkey));
+                byte[] decrypted = e.Tdecryption();//change this to string2byte[]
                 String output = new String(decrypted);
                 System.out.println(output);
             }
@@ -98,7 +97,7 @@ public class Main {
             String s1 = String.format("%8s", Integer.toBinaryString(message[i] & 0xFF)).replace(' ', '0');
             System.out.print(s1 + " ");
         }
-        
+
         System.out.println("");
 
         //System.out.println(key);
@@ -106,9 +105,7 @@ public class Main {
         RC4 oof2 = new RC4(key);
         byte[] encrypted = oof.encrypt(message);
         byte[] decrypted = oof2.decrypt(encrypted);
-        
-        
-        
+
         System.out.println("encrypted");
         for (int i = 0; i < key.length; i++) {
             //https://stackoverflow.com/questions/12310017/
@@ -116,9 +113,9 @@ public class Main {
             String s1 = String.format("%8s", Integer.toBinaryString(encrypted[i] & 0xFF)).replace(' ', '0');
             System.out.print(s1 + " ");
         }
-        
+
         System.out.println("");
-        
+
         System.out.println("decrypted/original");
         for (int i = 0; i < key.length; i++) {
             //https://stackoverflow.com/questions/12310017/
@@ -126,63 +123,36 @@ public class Main {
             String s1 = String.format("%8s", Integer.toBinaryString(decrypted[i] & 0xFF)).replace(' ', '0');
             System.out.print(s1 + " ");
         }
-        
-        
 
-        
         System.out.println("");
-        
-        
+
         base64(encrypted);
-        
-         base64(decrypted);
-         
-          base64(message);
-          
-        System.out.println("AAAAAAAAAAAAA");    
+
+        base64(decrypted);
+
+        base64(message);
+
+        System.out.println("AAAAAAAAAAAAA");
         System.out.println("");
-<<<<<<< HEAD
-         base64Decode(encrypted);
-         base64Decode(decrypted);
-         base64Decode(message);
-         System.out.println("aaaa");
-         System.out.println("");
-        stringToByteArray("kdjfkfjslkdjfslkdjfslkd");
-=======
-        // base64Decode(encrypted);
-        // base64Decode(decrypted);
-         //base64Decode(message);
-        
->>>>>>> ee5c35d08b404bfd58a482eaa0fc049b3672f3a4
     }
-    
-    
-    
-    
-    public static String base64(byte[] ty){
+
+    public static String base64(byte[] ty) {
         String base64Encode = Base64.getEncoder().encodeToString(ty);
         return base64Encode;
-        
+
     }
-    
-    
-    
-    public static byte[] base64Decode(String base64Encode){
+
+    public static byte[] base64Decode(String base64Encode) {
 
         byte[] base64Decode = Base64.getDecoder().decode(base64Encode);
-        
+
         return base64Decode;
-        
+
     }
-    
-    
-    
-    public static void stringToByteArray(String s ){
+
+    public static byte[] stringToByteArray(String s) {
         byte[] by = s.getBytes();
-        System.out.println("String to byte array" + Arrays.toString(by));
-        
-        
-        
+        return by;
     }
 
 }
