@@ -145,20 +145,8 @@ public class Main {
         base64(message);
 
         System.out.println("AAAAAAAAAAAAA");
-<<<<<<< HEAD
         System.out.println("");
 
-        System.out.println("aaaa");
-        System.out.println("");
-        stringToByteArray("kdjfkfjslkdjfslkdjfslkd");
-
-        // base64Decode(encrypted);
-        // base64Decode(decrypted);
-        //base64Decode(message);
-=======
-        System.out.println("");
-
->>>>>>> 3ee872e81177b6518545c7c1d87f6ed1e1532691
     }
 
     public static String base64(byte[] ty) {
@@ -175,22 +163,9 @@ public class Main {
 
     }
 
-<<<<<<< HEAD
-    /**
-     * used some code from 
-     * https://www.journaldev.com/770/string-byte-array-java
-     * for both 
-     * @param s
-     */
-    public static void stringToByteArray(String s) {
-        byte[] by = s.getBytes();
-        System.out.println("String to byte array" + Arrays.toString(by));
-
-=======
     public static byte[] stringToByteArray(String s) {
         byte[] by = s.getBytes();
         return by;
->>>>>>> 3ee872e81177b6518545c7c1d87f6ed1e1532691
     }
 
 }
