@@ -65,6 +65,27 @@ public class Main {
                 byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
                 System.out.println("" + decrypted.toString());
             }
+        } else{
+            System.out.println("[E]ncryption or [D]ecryption");
+            if(scanner.nextLine().charAt(0) == 'E'){
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                RC4 e = new RC4(hexStringToByteArray(userkey));
+                byte[] encrypted = e.encrypt(hexStringToByteArray(plainText));//change this to string2byte[]
+                System.out.println(base64(encrypted));
+            } else {
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                RC4 e = new RC4(hexStringToByteArray(userkey));
+                byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
+                String output = new String(decrypted);
+                System.out.println(output);
+            }
         }
         String str = "4d68023308dacfac5ee8d54a14d00caa";
         String str2 = "22222222222222222222222222222222";
