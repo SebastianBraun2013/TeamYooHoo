@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.Base64;
 import java.util.UUID;
 import java.io.UnsupportedEncodingException;
-
+import java.util.Arrays;
 /**
  *
  * @author sebastian.braun
@@ -97,7 +97,9 @@ public class Main {
          base64Decode(encrypted);
          base64Decode(decrypted);
          base64Decode(message);
-        
+         System.out.println("aaaa");
+         System.out.println("");
+        stringToByteArray("kdjfkfjslkdjfslkdjfslkd");
     }
     
     
@@ -119,5 +121,14 @@ public class Main {
         
     }
     
+    
+    
+    public static void stringToByteArray(String s ){
+        byte[] by = s.getBytes();
+        System.out.println("String to byte array" + Arrays.toString(by));
+        
+        
+        
+    }
 
 }
