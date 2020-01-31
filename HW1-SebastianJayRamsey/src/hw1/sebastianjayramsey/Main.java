@@ -53,7 +53,7 @@ public class Main {
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] encrypted = e.encrypt(hexStringToByteArray(plainText));//change this to string2byte[]
+                byte[] encrypted = e.encrypt(stringToByteArray(plainText));//change this to string2byte[]
                 System.out.println(base64(encrypted));
             } else {
                 System.out.println("Give message");
@@ -62,8 +62,28 @@ public class Main {
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
-                System.out.println("" + decrypted.toString());
+                byte[] decrypted = e.decrypt(base64Decode(plainText));
+                System.out.println( new String(decrypted));
+            }
+        } else {
+            System.out.println("[E]ncryption or [D]ecryption");
+            if (scanner.nextLine().charAt(0) == 'E') {
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                TEA e = new TEA(stringToByteArray(plainText), hexStringToByteArray(userkey));
+                byte[] encrypted = e.Tencryption();
+                System.out.println(base64(encrypted));
+            } else {
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                TEA e = new TEA(base64Decode(plainText), hexStringToByteArray(userkey));
+                byte[] decrypted = e.Tdecryption();//change this to string2byte[]
+                String output = new String(decrypted);
+                System.out.println(output);
             }
         }
         String str = "4d68023308dacfac5ee8d54a14d00caa";
@@ -113,6 +133,7 @@ public class Main {
         base64(message);
 
         System.out.println("AAAAAAAAAAAAA");
+<<<<<<< HEAD
         System.out.println("");
 
         System.out.println("aaaa");
@@ -122,6 +143,10 @@ public class Main {
         // base64Decode(encrypted);
         // base64Decode(decrypted);
         //base64Decode(message);
+=======
+        System.out.println("");
+
+>>>>>>> 3ee872e81177b6518545c7c1d87f6ed1e1532691
     }
 
     public static String base64(byte[] ty) {
@@ -138,6 +163,7 @@ public class Main {
 
     }
 
+<<<<<<< HEAD
     /**
      * used some code from 
      * https://www.journaldev.com/770/string-byte-array-java
@@ -148,6 +174,11 @@ public class Main {
         byte[] by = s.getBytes();
         System.out.println("String to byte array" + Arrays.toString(by));
 
+=======
+    public static byte[] stringToByteArray(String s) {
+        byte[] by = s.getBytes();
+        return by;
+>>>>>>> 3ee872e81177b6518545c7c1d87f6ed1e1532691
     }
 
 }

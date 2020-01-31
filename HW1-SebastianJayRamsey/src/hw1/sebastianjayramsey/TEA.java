@@ -27,8 +27,8 @@ public class TEA {
 
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
             sum = 0;
-            int l = 0;
-            int r = 0;
+            int l = message[j];
+            int r = message[k];
             for (int i = 0; i < 32; i++) {
                 sum = sum + delta;
                 l = l + (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
@@ -37,7 +37,7 @@ public class TEA {
             ciphertext[j] = l;
             ciphertext[k] = r;
         }
-        return this.Itob(ciphertext);
+        return this.Inttobyte(ciphertext);
 
     }
 
@@ -46,8 +46,8 @@ public class TEA {
 
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
             sum = delta << 5;
-            int l = 0;
-            int r = 0;
+            int l = message[j];
+            int r = message[k];
             for (int i = 0; i < 32; i++) {
                 r = r - (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
                 l = l - (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
@@ -56,10 +56,11 @@ public class TEA {
             plaintext[j] = l;
             plaintext[k] = r;
         }
-        return this.Itob(plaintext);
+        return this.Inttobyte(plaintext);
     }
+    // from https://stackoverflow.com/questions/44059116/how-to-convert-int-array-to-base64-string-in-java
     
-    private byte[] Itob(int[] ints) {
+    private byte[] Inttobyte(int[] ints) {
         byte[] bytes = new byte[ints.length];
     for (int i = 0; i < ints.length; i++) {
         bytes[i] = (byte)ints[i];
