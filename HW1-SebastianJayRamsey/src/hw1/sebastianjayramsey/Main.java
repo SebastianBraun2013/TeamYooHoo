@@ -120,19 +120,7 @@ public class Main {
           
         System.out.println("AAAAAAAAAAAAA");    
         System.out.println("");
-<<<<<<< HEAD
-         base64Decode(encrypted);
-         base64Decode(decrypted);
-         base64Decode(message);
-         System.out.println("aaaa");
-         System.out.println("");
-        stringToByteArray("kdjfkfjslkdjfslkdjfslkd");
-=======
-        // base64Decode(encrypted);
-        // base64Decode(decrypted);
-         //base64Decode(message);
-        
->>>>>>> ee5c35d08b404bfd58a482eaa0fc049b3672f3a4
+
     }
     
     
