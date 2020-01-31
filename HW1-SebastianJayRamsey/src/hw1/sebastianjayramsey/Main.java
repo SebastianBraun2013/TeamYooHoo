@@ -40,6 +40,32 @@ public class Main {
     //Base64 encoding
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        
+        
+        String plainText = "";
+        String userkey = "";
+        System.out.println("Which algorithm would you like to use [R}C4 or [T}ea");
+        if(scanner.nextLine().charAt(0) == 'R'){
+            System.out.println("[E]ncryption or [D]ecryption");
+            if(scanner.nextLine().charAt(0) == 'E'){
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                RC4 e = new RC4(hexStringToByteArray(userkey));
+                byte[] encrypted = e.encrypt(hexStringToByteArray(plainText));//change this to string2byte[]
+                System.out.println(base64(encrypted));
+            } else {
+                System.out.println("Give message");
+                plainText = scanner.nextLine();
+
+                System.out.println("Give key");
+                userkey = scanner.nextLine();
+                RC4 e = new RC4(hexStringToByteArray(userkey));
+                byte[] decrypted = e.decrypt(base64Decode(plainText));//change this to string2byte[]
+                System.out.println("" + decrypted.toString());
+            }
+        }
         String str = "4d68023308dacfac5ee8d54a14d00caa";
         String str2 = "22222222222222222222222222222222";
         byte[] message = hexStringToByteArray(str2);
@@ -94,28 +120,28 @@ public class Main {
           
         System.out.println("AAAAAAAAAAAAA");    
         System.out.println("");
-         base64Decode(encrypted);
-         base64Decode(decrypted);
-         base64Decode(message);
+        // base64Decode(encrypted);
+        // base64Decode(decrypted);
+         //base64Decode(message);
         
     }
     
     
     
     
-    public static void base64(byte[] ty){
+    public static String base64(byte[] ty){
         String base64Encode = Base64.getEncoder().encodeToString(ty);
-        System.out.println(base64Encode);
+        return base64Encode;
         
     }
     
     
     
-    public static void base64Decode(byte[] ty){
-        
-        String base64Encode = Base64.getEncoder().encodeToString(ty);
+    public static byte[] base64Decode(String base64Encode){
+
         byte[] base64Decode = Base64.getDecoder().decode(base64Encode);
-        System.out.println(Arrays.toString(base64Decode));
+        
+        return base64Decode;
         
     }
     
