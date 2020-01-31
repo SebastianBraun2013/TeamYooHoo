@@ -35,7 +35,7 @@ public class TEA {
                 r = r + (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
             }
             ciphertext[j] = l;
-            ciphertext[1] = r;
+            ciphertext[k] = r;
         }
         return this.Itob(ciphertext);
 
@@ -51,6 +51,7 @@ public class TEA {
             for (int i = 0; i < 32; i++) {
                 r = r - (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
                 l = l - (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
+                sum = sum - delta;
             }
             plaintext[j] = l;
             plaintext[k] = r;
