@@ -17,13 +17,8 @@ public class TEA {
     private int sum;
 
     public TEA(byte[] m, byte[] k) {
-        if (key.length != 16) {
-            throw new IllegalArgumentException(
-                    "key must be 128 bits");
-        } else {
-            message = m;
-            key = k;
-        }
+        message = m;
+        key = k;
 
     }
 
@@ -64,12 +59,12 @@ public class TEA {
         return this.Inttobyte(plaintext);
     }
     // from https://stackoverflow.com/questions/44059116/how-to-convert-int-array-to-base64-string-in-java
-
+    
     private byte[] Inttobyte(int[] ints) {
         byte[] bytes = new byte[ints.length];
-        for (int i = 0; i < ints.length; i++) {
-            bytes[i] = (byte) ints[i];
-        }
-        return bytes;
+    for (int i = 0; i < ints.length; i++) {
+        bytes[i] = (byte)ints[i];
+    }
+    return bytes;
     }
 }

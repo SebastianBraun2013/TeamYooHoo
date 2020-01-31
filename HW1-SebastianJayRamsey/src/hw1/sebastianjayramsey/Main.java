@@ -34,7 +34,12 @@ public class Main {
         return data;
     }
 
+    //String to Byte Array
+    public static boolean TEAKeyCheck(byte[] key) {
+        return key.length == 16;
+    }
 
+    //Base64 encoding
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -93,7 +98,55 @@ public class Main {
                 System.out.println(output);
             }
         }
+        String str = "4d68023308dacfac5ee8d54a14d00caa";
+        String str2 = "22222222222222222222222222222222";
+        byte[] message = hexStringToByteArray(str2);
+        byte[] key = hexStringToByteArray(str);
+        System.out.println("original");
+        for (int i = 0; i < key.length; i++) {
+            //https://stackoverflow.com/questions/12310017/
+            //how-to-convert-a-byte-to-its-binary-string-representation 
+            String s1 = String.format("%8s", Integer.toBinaryString(message[i] & 0xFF)).replace(' ', '0');
+            System.out.print(s1 + " ");
+        }
+
+        System.out.println("");
+
+        //System.out.println(key);
+        RC4 oof = new RC4(key);
+        RC4 oof2 = new RC4(key);
+        byte[] encrypted = oof.encrypt(message);
+        byte[] decrypted = oof2.decrypt(encrypted);
+
+        System.out.println("encrypted");
+        for (int i = 0; i < key.length; i++) {
+            //https://stackoverflow.com/questions/12310017/
+            //how-to-convert-a-byte-to-its-binary-string-representation 
+            String s1 = String.format("%8s", Integer.toBinaryString(encrypted[i] & 0xFF)).replace(' ', '0');
+            System.out.print(s1 + " ");
+        }
+
+        System.out.println("");
+
+        System.out.println("decrypted/original");
+        for (int i = 0; i < key.length; i++) {
+            //https://stackoverflow.com/questions/12310017/
+            //how-to-convert-a-byte-to-its-binary-string-representation 
+            String s1 = String.format("%8s", Integer.toBinaryString(decrypted[i] & 0xFF)).replace(' ', '0');
+            System.out.print(s1 + " ");
+        }
         
+        System.out.println("");
+
+        base64(encrypted);
+
+        base64(decrypted);
+
+        base64(message);
+
+        System.out.println("AAAAAAAAAAAAA");
+        System.out.println("");
+
     }
 
     public static String base64(byte[] ty) {
