@@ -16,6 +16,12 @@ public class RC4 {
     private final byte[] T = new byte[256];
     private final int keylen;
 
+    
+    
+    /**
+     * This makes the key stream so that rc4 can encrypt and decrypt 
+     * @param key 
+     */
     public RC4(final byte[] key) {
         if (key.length < 1 || key.length > 256) {
             throw new IllegalArgumentException(
@@ -36,6 +42,12 @@ public class RC4 {
         }
     }
 
+    
+    /**
+     * This takes the plaintext and encrypts it
+     * @param plaintext
+     * @return 
+     */
     public byte[] encrypt(final byte[] plaintext) {
         final byte[] ciphertext = new byte[plaintext.length];
         int i = 0, j = 0, k, t;
@@ -51,7 +63,12 @@ public class RC4 {
         }
         return ciphertext;
     }
-
+    
+    /**
+     * Since this function is rc4 decryption it takes the ciphertext and encrypts it 
+     * @param ciphertext
+     * @return 
+     */
     public byte[] decrypt(final byte[] ciphertext) {
         return encrypt(ciphertext);
     }
