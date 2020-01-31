@@ -6,7 +6,7 @@
 package hw1.sebastianjayramsey;
 
 /**
- *
+ * 
  * @author sebastian.braun
  */
 public class TEA {
@@ -23,7 +23,7 @@ public class TEA {
     }
 
     public int[] Tencryption() {
-        int[] ciphertext = null;
+        int[] ciphertext = new int[message.length];
         sum = 0;
         int l = 0;
         int r = 0;
@@ -41,7 +41,7 @@ public class TEA {
     }
 
     public int[] Tdecryption() {
-        int[] plaintext = null;
+        int[] plaintext = new int[message.length];
         sum = delta << 5;
         int l = 0;
         int r = 0;
