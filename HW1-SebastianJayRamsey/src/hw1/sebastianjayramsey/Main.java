@@ -7,6 +7,9 @@ package hw1.sebastianjayramsey;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Base64;
+import java.util.UUID;
+import java.io.UnsupportedEncodingException;
 
 /**
  *
@@ -57,6 +60,8 @@ public class Main {
         byte[] encrypted = oof.encrypt(message);
         byte[] decrypted = oof2.decrypt(encrypted);
         
+        
+        
         System.out.println("encrypted");
         for (int i = 0; i < key.length; i++) {
             //https://stackoverflow.com/questions/12310017/
@@ -75,8 +80,44 @@ public class Main {
             System.out.print(s1 + " ");
         }
         
-        System.out.println("");
+        
 
+        
+        System.out.println("");
+        
+        
+        base64(encrypted);
+        
+         base64(decrypted);
+         
+          base64(message);
+          
+        System.out.println("AAAAAAAAAAAAA");    
+        System.out.println("");
+         base64Decode(encrypted);
+         base64Decode(decrypted);
+         base64Decode(message);
+        
     }
+    
+    
+    
+    
+    public static void base64(byte[] ty){
+        String base64Encode = Base64.getEncoder().encodeToString(ty);
+        System.out.println(base64Encode);
+        
+    }
+    
+    
+    
+    public static void base64Decode(byte[] ty){
+        
+        String base64Encode = Base64.getEncoder().encodeToString(ty);
+        byte[] base64Decode = Base64.getDecoder().decode(base64Encode);
+        System.out.println(Arrays.toString(base64Decode));
+        
+    }
+    
 
 }
