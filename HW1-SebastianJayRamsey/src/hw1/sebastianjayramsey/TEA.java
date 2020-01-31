@@ -6,7 +6,7 @@
 package hw1.sebastianjayramsey;
 
 /**
- * 
+ *
  * @author sebastian.braun
  */
 public class TEA {
@@ -24,10 +24,11 @@ public class TEA {
 
     public int[] Tencryption() {
         int[] ciphertext = new int[message.length];
-        sum = 0;
-        int l = 0;
-        int r = 0;
+
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
+            sum = 0;
+            int l = 0;
+            int r = 0;
             for (int i = 0; i < 32; i++) {
                 sum = sum + delta;
                 l = l + (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
@@ -42,10 +43,11 @@ public class TEA {
 
     public int[] Tdecryption() {
         int[] plaintext = new int[message.length];
-        sum = delta << 5;
-        int l = 0;
-        int r = 0;
+
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
+            sum = delta << 5;
+            int l = 0;
+            int r = 0;
             for (int i = 0; i < 32; i++) {
                 r = r - (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
                 l = l - (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
