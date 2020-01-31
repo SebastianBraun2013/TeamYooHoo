@@ -16,13 +16,13 @@ public class TEA {
     private final int delta = 0x9E3779B9;
     private int sum;
 
-    public void TEA(byte[] m, byte[] k) {
+    public TEA(byte[] m, byte[] k) {
         message = m;
         key = k;
 
     }
 
-    public int[] Tencryption() {
+    public byte[] Tencryption() {
         int[] ciphertext = new int[message.length];
 
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
@@ -37,11 +37,11 @@ public class TEA {
             ciphertext[j] = l;
             ciphertext[1] = r;
         }
-        return ciphertext;
+        return this.Itob(ciphertext);
 
     }
 
-    public int[] Tdecryption() {
+    public byte[] Tdecryption() {
         int[] plaintext = new int[message.length];
 
         for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
@@ -55,6 +55,14 @@ public class TEA {
             plaintext[j] = l;
             plaintext[k] = r;
         }
-        return plaintext;
+        return this.Itob(plaintext);
+    }
+    
+    private byte[] Itob(int[] ints) {
+        byte[] bytes = new byte[ints.length];
+    for (int i = 0; i < ints.length; i++) {
+        bytes[i] = (byte)ints[i];
+    }
+    return bytes;
     }
 }
