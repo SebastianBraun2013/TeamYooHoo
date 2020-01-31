@@ -10,44 +10,49 @@ package hw1.sebastianjayramsey;
  * @author sebastian.braun
  */
 public class TEA {
+
     private byte[] message;
     private byte[] key;
-    private final int delta=0x9E3779B9; 
+    private final int delta = 0x9E3779B9;
     private int sum;
-    private int l;
-    private int r;
-    
+
     public void TEA(byte[] m, byte[] k) {
         message = m;
         key = k;
-        l = message[0];
-        r = message[1];
-        
+
     }
-    
+
     public int[] Tencryption() {
         int[] ciphertext = null;
         sum = 0;
-        for(int i = 0; i < 32; i++){
-            sum = sum + delta;
-            l = l + ((( r << 4) + key[0]) ^ (r + sum) ^ (( r>> 5) + key[1]));
-            r = r + ((( l << 4) + key[2]) ^ ( l + sum) ^ (( l >> 5) + key[3]));
+        int l = 0;
+        int r = 0;
+        for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
+            for (int i = 0; i < 32; i++) {
+                sum = sum + delta;
+                l = l + (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
+                r = r + (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
+            }
+            ciphertext[j] = l;
+            ciphertext[1] = r;
         }
-        ciphertext[0] = l;
-        ciphertext[1] = r;
         return ciphertext;
-        
+
     }
-    
+
     public int[] Tdecryption() {
         int[] plaintext = null;
         sum = delta << 5;
-        for( int i = 0; i < 32; i++){
-            r = r - (((l << 4) + key[2]) ^ (l + sum) ^ (( l >> 5) + key[3]));
-            l = l - (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
+        int l = 0;
+        int r = 0;
+        for (int j = 0, k = 1; j < message.length && k < message.length; j = j + 2, k = k + 2) {
+            for (int i = 0; i < 32; i++) {
+                r = r - (((l << 4) + key[2]) ^ (l + sum) ^ ((l >> 5) + key[3]));
+                l = l - (((r << 4) + key[0]) ^ (r + sum) ^ ((r >> 5) + key[1]));
+            }
+            plaintext[j] = l;
+            plaintext[k] = r;
         }
-        plaintext[0] = l;
-        plaintext[1] = r;
         return plaintext;
     }
 }
