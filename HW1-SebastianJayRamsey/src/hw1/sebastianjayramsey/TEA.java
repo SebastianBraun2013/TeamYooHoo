@@ -17,20 +17,29 @@ public class TEA {
     private int sum;
     int r;
     int l;
-/**
- * creates TEA
- * @param m - message from main as byte array
- * @param k - key from main as byte array
- */
+
+    /**
+     * creates TEA
+     *
+     * @param m - message from main as byte array
+     * @param k - key from main as byte array
+     */
     public TEA(byte[] m, byte[] k) {
-        message = m;
-        key = k;
+        if (k.length != 16) {
+            throw new IllegalArgumentException(
+                    "key must be 128 bits");
+        } else {
+            message = m;
+            key = k;
+        }
 
     }
-/**
- * encrypts message using TEA, based on sudo code from book
- * @return ciphertext as byte array
- */
+
+    /**
+     * encrypts message using TEA, based on sudo code from book
+     *
+     * @return ciphertext as byte array
+     */
     public byte[] Tencryption() {
         int[] ciphertext = new int[message.length];
 
@@ -49,10 +58,12 @@ public class TEA {
         return this.Inttobyte(ciphertext);
 
     }
-/**
- * decrypts message using TEA, based of sudo code from book
- * @return plaintext as a byte array
- */
+
+    /**
+     * decrypts message using TEA, based of sudo code from book
+     *
+     * @return plaintext as a byte array
+     */
     public byte[] Tdecryption() {
         int[] plaintext = new int[message.length];
 
@@ -70,17 +81,19 @@ public class TEA {
         }
         return this.Inttobyte(plaintext);
     }
-    
+
     /**
-     *  from https://stackoverflow.com/questions/44059116/how-to-convert-int-array-to-base64-string-in-java
+     * from
+     * https://stackoverflow.com/questions/44059116/how-to-convert-int-array-to-base64-string-in-java
+     *
      * @param ints - int array from encryption or decryption
      * @return bytes - int array as a byte array
      */
     private byte[] Inttobyte(int[] ints) {
         byte[] bytes = new byte[ints.length];
-    for (int i = 0; i < ints.length; i++) {
-        bytes[i] = (byte)ints[i];
-    }
-    return bytes;
+        for (int i = 0; i < ints.length; i++) {
+            bytes[i] = (byte) ints[i];
+        }
+        return bytes;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Arrays;
  *
  * @author sebastian.braun
  * TEA Message must be 32 Characters. Didn't get to padding
+ *
  */
 public class Main {
 
@@ -34,40 +35,37 @@ public class Main {
         return data;
     }
 
-    //String to Byte Array
-    public static boolean TEAKeyCheck(byte[] key) {
-        return key.length == 16;
-    }
 
-    //Base64 encoding
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String plainText = "";
+        String text = "";
         String userkey = "";
+        
+        //User prompt logic
         System.out.println("Which algorithm would you like to use [R}C4 or [T}ea");
         if (scanner.nextLine().charAt(0) == 'R') {
             System.out.println("[E]ncryption or [D]ecryption");
             if (scanner.nextLine().charAt(0) == 'E') {
                 
                 System.out.println("Give message");
-                plainText = scanner.nextLine();
+                text = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] encrypted = e.encrypt(stringToByteArray(plainText));
+                byte[] encrypted = e.encrypt(stringToByteArray(text));
                 
                 System.out.println(base64(encrypted));
             } else {
                 
                 System.out.println("Give message");
-                plainText = scanner.nextLine();
+                text = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 
                 RC4 e = new RC4(hexStringToByteArray(userkey));
-                byte[] decrypted = e.decrypt(base64Decode(plainText));
+                byte[] decrypted = e.decrypt(base64Decode(text));
                 
                 System.out.println(new String(decrypted));
             }
@@ -76,85 +74,36 @@ public class Main {
             if (scanner.nextLine().charAt(0) == 'E') {
                 
                 System.out.println("Give message");
-                plainText = scanner.nextLine();
+                text = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 
-                TEA e = new TEA(stringToByteArray(plainText), hexStringToByteArray(userkey));
+                TEA e = new TEA(stringToByteArray(text), hexStringToByteArray(userkey));
                 byte[] encrypted = e.Tencryption();
                 
                 System.out.println(base64(encrypted));
             } else {
                 
                 System.out.println("Give message");
-                plainText = scanner.nextLine();
+                text = scanner.nextLine();
                 System.out.println("Give key");
                 userkey = scanner.nextLine();
                 
-                TEA e = new TEA(base64Decode(plainText), hexStringToByteArray(userkey));
+                TEA e = new TEA(base64Decode(text), hexStringToByteArray(userkey));
                 byte[] decrypted = e.Tdecryption();
                 
                 String output = new String(decrypted);
                 System.out.println(output);
             }
         }
-        String str = "4d68023308dacfac5ee8d54a14d00caa";
-        String str2 = "22222222222222222222222222222222";
-        byte[] message = hexStringToByteArray(str2);
-        byte[] key = hexStringToByteArray(str);
-        System.out.println("original");
-        for (int i = 0; i < key.length; i++) {
-            //https://stackoverflow.com/questions/12310017/
-            //how-to-convert-a-byte-to-its-binary-string-representation 
-            String s1 = String.format("%8s", Integer.toBinaryString(message[i] & 0xFF)).replace(' ', '0');
-            System.out.print(s1 + " ");
-        }
-
-        System.out.println("");
-
-        //System.out.println(key);
-        RC4 oof = new RC4(key);
-        RC4 oof2 = new RC4(key);
-        byte[] encrypted = oof.encrypt(message);
-        byte[] decrypted = oof2.decrypt(encrypted);
-
-        System.out.println("encrypted");
-        for (int i = 0; i < key.length; i++) {
-            //https://stackoverflow.com/questions/12310017/
-            //how-to-convert-a-byte-to-its-binary-string-representation 
-            String s1 = String.format("%8s", Integer.toBinaryString(encrypted[i] & 0xFF)).replace(' ', '0');
-            System.out.print(s1 + " ");
-        }
-
-        System.out.println("");
-
-        System.out.println("decrypted/original");
-        for (int i = 0; i < key.length; i++) {
-            //https://stackoverflow.com/questions/12310017/
-            //how-to-convert-a-byte-to-its-binary-string-representation 
-            String s1 = String.format("%8s", Integer.toBinaryString(decrypted[i] & 0xFF)).replace(' ', '0');
-            System.out.print(s1 + " ");
-        }
-        
-        System.out.println("");
-
-        base64(encrypted);
-
-        base64(decrypted);
-
-        base64(message);
-
-        System.out.println("AAAAAAAAAAAAA");
-        System.out.println("");
-
     }
-
+    //encodes byte array to base64
     public static String base64(byte[] ty) {
         String base64Encode = Base64.getEncoder().encodeToString(ty);
         return base64Encode;
 
     }
-
+    //decodes base64 string to byte array
     public static byte[] base64Decode(String base64Encode) {
 
         byte[] base64Decode = Base64.getDecoder().decode(base64Encode);
@@ -162,7 +111,7 @@ public class Main {
         return base64Decode;
 
     }
-
+    //converts normal string to byte array
     public static byte[] stringToByteArray(String s) {
         byte[] by = s.getBytes();
         return by;
